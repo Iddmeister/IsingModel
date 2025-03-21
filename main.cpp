@@ -1,6 +1,8 @@
 #include <iostream>
 #include "config.cpp"
 #include <fstream>
+#include <sstream>
+
 
 int main() {
 
@@ -8,34 +10,43 @@ int main() {
 
     int seed = 123500;
 
-    srand(seed);
-
     int num_atoms = 100;
     double J = 1;
-    double temperature = 298;
+    std::vector<double> temperatures = {0, 50, 298, 800, 1e20, 1e23, 1e24, 1e26, 1e28, 1e30};
     
     int numConfigs = 10000;
     int iterations = 2000;
 
-    std::vector<Config> configurations;
+    // std::vector<Config> configurations;
 
-    output.open("output.txt");
+    for (int t = 0; t < temperatures.size(); ++t) {
 
-    output << "config,energy,magnetism" << std::endl;
+        srand(seed);
 
-    for (int i = 0; i < numConfigs; ++i) {
+        double temperature = temperatures[t];
+        
+        std::stringstream filename;
+        filename << "output/temp_" << t;
+        output.open(filename.str());
 
-        Config new_config = Config(num_atoms, J, temperature);
-        new_config.simulate(iterations);
-        configurations.push_back(new_config);
+        output << "Temperature " << temperature << std::endl;
+        output << "config,energy,magnetism" << std::endl;
 
-        output << i << "," << new_config.calculateEnergy() << "," << new_config.calculateMagnetism() << std::endl;
+        for (int i = 0; i < numConfigs; ++i) {
 
-        // std::cout << "\nConfiguration " << i+1 << "\nTotal Energy: " << new_config.calculateEnergy() << "\nMagnetisation: " << new_config.calculateMagnetism() << "\n";
+            Config new_config = Config(num_atoms, J, temperature);
+            new_config.simulate(iterations);
+            // configurations.push_back(new_config);
+            output << i << "," << new_config.calculateEnergy() << "," << new_config.calculateMagnetism() << std::endl;
+
+            // std::cout << "\nConfiguration " << i+1 << "\nTotal Energy: " << new_config.calculateEnergy() << "\nMagnetisation: " << new_config.calculateMagnetism() << "\n";
+
+        }
+
+        output.close();
+
 
     }
-
-    output.close();
 
     return 0;
 
