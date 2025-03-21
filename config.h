@@ -4,7 +4,11 @@ class Config {
 
     public:
 
-        Config(int atoms);
+        Config(int atoms, double J);
+        double J;
+
+        double calculateEnergyChange(int atom);
+
 
     private:
 
