@@ -1,9 +1,12 @@
 #include "config.h"
 #include <cstdlib>
+#include <cmath>
 
-Config::Config(int _atoms, double _J) {
+Config::Config(int _atoms, double _J, double _temperature) {
 
     J = _J;
+    temperature = _temperature;
+    beta = 1/(boltzmannConstant*temperature);
 
     atoms.resize(_atoms);
 
@@ -31,7 +34,6 @@ double Config::calculateEnergyChange(int atom) {
 
         energyChange = -J*atoms[atom]*atoms[atom-1];
 
-
     } else {
 
         energyChange = (-J*atoms[atom]*atoms[atom+1]) + (-J*atoms[atom]*atoms[atom-1]);
@@ -40,3 +42,54 @@ double Config::calculateEnergyChange(int atom) {
 
     return energyChange;
 }
+
+void Config::simulate(int iterations) {
+
+    for (int i = 0; i < iterations; ++i) {
+
+        int selection = rand()%(atoms.size()+1);
+
+        double energyChange = calculateEnergyChange(selection);
+        
+        double probability = exp(-beta*energyChange);
+
+        if (probability > 1) probability = 1;
+
+        if ((rand()%100000)/1e5 < probability) {
+
+            atoms[selection] *= -1;
+        
+        }
+
+    }
+
+}
+
+double Config::calculateEnergy() {
+
+    double total = 0;
+
+    for (int i = 0; i < atoms.size(); ++i) {
+        
+        total += calculateEnergyChange(i);
+
+    }
+
+    return total;
+
+}
+
+double Config::calculateMagnetism() {
+
+    double total = 0;
+
+    for (int i = 0; i < atoms.size(); ++i) {
+        
+        total += atoms[i];
+
+    }
+
+    return total;
+
+}
+
