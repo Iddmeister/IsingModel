@@ -27,7 +27,7 @@ double calculate_energy(int selection, int atoms[], double J) {
 
 int main() {
 
-    int seed = 1234;
+    int seed = 123500;
 
     srand(seed);
 
@@ -49,7 +49,7 @@ int main() {
 
     }
 
-    int iterations = 200000;
+    int iterations = 20000;
 
     for (int i = 0; i < iterations; ++i) {
 
