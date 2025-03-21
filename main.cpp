@@ -14,8 +14,8 @@ int main() {
     double J = 1;
     double temperature = 298;
     
-    int numConfigs = 100;
-    int iterations = 20000;
+    int numConfigs = 10000;
+    int iterations = 2000;
 
     std::vector<Config> configurations;
 
