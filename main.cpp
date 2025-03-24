@@ -37,7 +37,7 @@ int main() {
             Config new_config = Config(num_atoms, J, temperature);
             new_config.simulate(iterations);
             // configurations.push_back(new_config);
-            output << i << "," << new_config.calculateEnergy() << "," << new_config.calculateMagnetism() << std::endl;
+            output << i << "," << new_config.calculateTotalEnergy() << "," << new_config.calculateTotalMagnetism() << std::endl;
 
             // std::cout << "\nConfiguration " << i+1 << "\nTotal Energy: " << new_config.calculateEnergy() << "\nMagnetisation: " << new_config.calculateMagnetism() << "\n";
 

@@ -32,7 +32,7 @@ bool Config::insideBounds(int x, int y) {
 
 }
 
-double Config::calculateEnergyChange(int atomX, int atomY) {
+double Config::calculateEnergy(int atomX, int atomY) {
 
     double energyChange;
 
@@ -58,7 +58,7 @@ void Config::simulate(int iterations) {
         int selectionX = rand()%(atoms.size());
         int selectionY = rand()%(atoms.size());
 
-        double energyChange = calculateEnergyChange(selectionX, selectionY);
+        double energyChange = calculateEnergy(selectionX, selectionY)*2;
         
         double probability = exp(-beta*energyChange);
 
@@ -74,14 +74,14 @@ void Config::simulate(int iterations) {
 
 }
 
-double Config::calculateEnergy() {
+double Config::calculateTotalEnergy() {
 
     double total = 0;
 
     for (int x = 0; x < atoms.size(); ++x) {
         
         for (int y = 0; y < atoms.size(); ++y) {
-            total += calculateEnergyChange(x, y);
+            total += calculateEnergy(x, y);
         }
 
     }
@@ -90,7 +90,7 @@ double Config::calculateEnergy() {
 
 }
 
-double Config::calculateMagnetism() {
+double Config::calculateTotalMagnetism() {
 
     double total = 0;
 

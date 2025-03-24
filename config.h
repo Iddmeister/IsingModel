@@ -9,9 +9,9 @@ class Config {
         double temperature;
         double beta;
 
-        double calculateEnergyChange(int atomX, int atomY);
-        double calculateEnergy();
-        double calculateMagnetism();
+        double calculateEnergy(int atomX, int atomY);
+        double calculateTotalEnergy();
+        double calculateTotalMagnetism();
         void simulate(int iterations);
 
 
