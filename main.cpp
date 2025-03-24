@@ -8,16 +8,16 @@ int main() {
 
     std::ofstream output;
 
-    int seed = 123500;
+    int seed = 1234;
 
     int num_atoms = 100;
     double J = 1;
     std::vector<double> temperatures = {0, 50, 298, 800, 1e20, 1e23, 1e24, 1e26, 1e28, 1e30};
     
-    int numConfigs = 10000;
+    int numConfigs = 1000;
     int iterations = 2000;
 
-    // std::vector<Config> configurations;
+    // std::vector<Config> configurations;rand()%100000)/1e5
 
     for (int t = 0; t < temperatures.size(); ++t) {
 

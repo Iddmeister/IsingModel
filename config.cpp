@@ -10,8 +10,12 @@ Config::Config(int _atoms, double _J, double _temperature) {
 
     atoms.resize(_atoms);
 
-    for (int i = 0; i < _atoms; ++i) {
-        atoms[i] = randomOne();
+    for (int x = 0; x < _atoms; ++x) {
+        atoms[x].resize(_atoms);
+        for (int y = 0; y < _atoms; ++y) {
+            atoms[x][y] = randomOne();
+        }
+
     }
 
 }
@@ -22,21 +26,25 @@ int Config::randomOne() {
 
 }
 
-double Config::calculateEnergyChange(int atom) {
+bool Config::insideBounds(int x, int y) {
+
+    return (x >= 0 && x < atoms.size() && y >= 0 && y < atoms.size());
+
+}
+
+double Config::calculateEnergyChange(int atomX, int atomY) {
 
     double energyChange;
 
-    if (atom == 0) {
+    int directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    
+    for (int d = 0; d < sizeof(directions); ++d) {
 
-        energyChange = -J*atoms[atom]*atoms[atom+1];
+        if (insideBounds(atomX+directions[d][0], atomY+directions[d][1])) {
 
-    } else if (atom == atoms.size()-1) {
+            energyChange += (-J*atoms[atomX+directions[d][0]][atomY+directions[d][1]]*atoms[atomX][atomY]);
 
-        energyChange = -J*atoms[atom]*atoms[atom-1];
-
-    } else {
-
-        energyChange = (-J*atoms[atom]*atoms[atom+1]) + (-J*atoms[atom]*atoms[atom-1]);
+        }
 
     }
 
@@ -47,9 +55,10 @@ void Config::simulate(int iterations) {
 
     for (int i = 0; i < iterations; ++i) {
 
-        int selection = rand()%(atoms.size()+1);
+        int selectionX = rand()%(atoms.size());
+        int selectionY = rand()%(atoms.size());
 
-        double energyChange = calculateEnergyChange(selection);
+        double energyChange = calculateEnergyChange(selectionX, selectionY);
         
         double probability = exp(-beta*energyChange);
 
@@ -57,7 +66,7 @@ void Config::simulate(int iterations) {
 
         if ((rand()%100000)/1e5 < probability) {
 
-            atoms[selection] *= -1;
+            atoms[selectionX][selectionY] *= -1;
         
         }
 
@@ -69,9 +78,11 @@ double Config::calculateEnergy() {
 
     double total = 0;
 
-    for (int i = 0; i < atoms.size(); ++i) {
+    for (int x = 0; x < atoms.size(); ++x) {
         
-        total += calculateEnergyChange(i);
+        for (int y = 0; y < atoms.size(); ++y) {
+            total += calculateEnergyChange(x, y);
+        }
 
     }
 
@@ -83,9 +94,11 @@ double Config::calculateMagnetism() {
 
     double total = 0;
 
-    for (int i = 0; i < atoms.size(); ++i) {
+    for (int x = 0; x < atoms.size(); ++x) {
         
-        total += atoms[i];
+        for (int y = 0; y < atoms.size(); ++y) {
+            total += atoms[x][y];
+        }
 
     }
 

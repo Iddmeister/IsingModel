@@ -9,7 +9,7 @@ class Config {
         double temperature;
         double beta;
 
-        double calculateEnergyChange(int atom);
+        double calculateEnergyChange(int atomX, int atomY);
         double calculateEnergy();
         double calculateMagnetism();
         void simulate(int iterations);
@@ -19,7 +19,8 @@ class Config {
 
         double boltzmannConstant = 1.381e-23;
         int randomOne();
-        std::vector<int> atoms;
+        bool insideBounds(int x, int y);
+        std::vector<std::vector<int>> atoms;
 
 
 };
