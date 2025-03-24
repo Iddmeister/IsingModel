@@ -22,7 +22,7 @@ int Config::randomOne() {
 
 }
 
-double Config::calculateEnergyChange(int atom) {
+double Config::calculateEnergy(int atom) {
 
     double energyChange;
 
@@ -49,7 +49,7 @@ void Config::simulate(int iterations) {
 
         int selection = rand()%(atoms.size()+1);
 
-        double energyChange = calculateEnergyChange(selection);
+        double energyChange = calculateEnergy(selection)*2;
         
         double probability = exp(-beta*energyChange);
 
@@ -65,13 +65,13 @@ void Config::simulate(int iterations) {
 
 }
 
-double Config::calculateEnergy() {
+double Config::calculateTotalEnergy() {
 
     double total = 0;
 
     for (int i = 0; i < atoms.size(); ++i) {
         
-        total += calculateEnergyChange(i);
+        total += calculateEnergy(i);
 
     }
 
@@ -79,7 +79,7 @@ double Config::calculateEnergy() {
 
 }
 
-double Config::calculateMagnetism() {
+double Config::calculateTotalMagnetism() {
 
     double total = 0;
 
