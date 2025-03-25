@@ -14,7 +14,7 @@ int main() {
     double J = 1;
     std::vector<double> temperatures = {1e15, 1e20, 1e21, 1e22, 2.5e22, 5e22, 7.5e22, 1e23, 2.5e23, 5e23, 7.5e23, 1e24, 1e25, 1e26, 1e27, 1e28};
     
-    int numConfigs = 1000;
+    int numConfigs = 10000;
     int iterations = 2000;
 
     // std::vector<Config> configurations;
