@@ -19,7 +19,7 @@ double calculateEnergy(int selection, int atoms[], double J, int flip=1) {
 
     } else {
 
-        energy_change = (-J*atoms[selection]*flip*atoms[selection+1]) + (-J*atoms[selection]*atoms[selection-1]);
+        energy_change = (-J*atoms[selection]*flip*atoms[selection+1]) + (-J*atoms[selection]*flip*atoms[selection-1]);
 
     }
 
@@ -60,7 +60,7 @@ int main() {
         int selection = rand()%(num_atoms+1);
 
         //The energy change of flipping the atom's spin is calculated using the calculateEnergy function
-        double energy_change = calculateEnergy(selection, atoms, J) - calculateEnergy(selection, atoms, J, -1);
+        double energy_change = calculateEnergy(selection, atoms, J, -1) - calculateEnergy(selection, atoms, J);
         
         //The probability of this change is calculated using the partition function
         double probability = exp(-beta*energy_change);
