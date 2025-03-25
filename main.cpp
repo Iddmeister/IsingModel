@@ -5,22 +5,22 @@
 #include <fstream>
 #include <vector>
 
-double calculate_energy(int selection, int atoms[], double J) {
+double calculateEnergy(int selection, int atoms[], double J, int flip=1) {
 
     double energy;
 
     if (selection == 0) {
 
-        energy = -J*atoms[selection]*atoms[selection+1];
+        energy = -J*atoms[selection]*flip*atoms[selection+1];
 
     } else if (selection == 100-1) {
 
-        energy = -J*atoms[selection]*atoms[selection-1];
+        energy = -J*atoms[selection]*flip*atoms[selection-1];
 
 
     } else {
 
-        energy = (-J*atoms[selection]*atoms[selection+1]) + (-J*atoms[selection]*atoms[selection-1]);
+        energy = (-J*atoms[selection]*flip*atoms[selection+1]) + (-J*atoms[selection]*flip*atoms[selection-1]);
 
     }
 
@@ -30,7 +30,6 @@ double calculate_energy(int selection, int atoms[], double J) {
 int main() {
 
     int seed = 1234;
-
 
     double J  = 1;
     double temperature = 298;
@@ -76,7 +75,7 @@ int main() {
 
             int selection = rand()%(num_atoms+1);
 
-            double energy_change = calculate_energy(selection, atoms, J)*2;
+            double energy_change = calculateEnergy(selection, atoms, J, -1) - calculateEnergy(selection, atoms, J);
             
             double probability = exp(-beta*energy_change);
             // std::cout << energy_change;
@@ -95,7 +94,7 @@ int main() {
         int magnetisation = 0;
 
         for (int i = 0; i < num_atoms; ++i) {
-            total_energy += calculate_energy(i, atoms, J);
+            total_energy += calculateEnergy(i, atoms, J);
             magnetisation += atoms[i];
         }
 
