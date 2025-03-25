@@ -2,11 +2,13 @@
 #include <iostream>
 #include <cmath>
 
-//This is the original algorithm for generating a configuration using the Ising model
-
+//This function takes an array of atoms and an index for the atom to calculate the energy of interaction for
+//The value of J and whether or not to flip the state of the atom of interest are also included in the parameters
 double calculateEnergy(int selection, int atoms[], double J, int flip=1) {
 
     double energy_change;
+
+    //Boundary conditions for the first and last atom in the line are accounted for
 
     if (selection == 0) {
 
@@ -15,7 +17,6 @@ double calculateEnergy(int selection, int atoms[], double J, int flip=1) {
     } else if (selection == 100-1) {
 
         energy_change = -J*atoms[selection]*flip*atoms[selection-1];
-
 
     } else {
 
