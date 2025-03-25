@@ -32,9 +32,9 @@ bool Config::insideBounds(int x, int y) {
 
 }
 
-double Config::calculateEnergy(int atomX, int atomY) {
+double Config::calculateEnergy(int atomX, int atomY, int flip=1) {
 
-    double energyChange;
+    double energy;
 
     int directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     
@@ -42,14 +42,15 @@ double Config::calculateEnergy(int atomX, int atomY) {
 
         if (insideBounds(atomX+directions[d][0], atomY+directions[d][1])) {
 
-            energyChange += (-J*atoms[atomX+directions[d][0]][atomY+directions[d][1]]*atoms[atomX][atomY]);
+            energy += (-J*atoms[atomX+directions[d][0]][atomY+directions[d][1]]*atoms[atomX][atomY]*flip);
 
         }
 
     }
 
-    return energyChange;
+    return energy;
 }
+
 
 void Config::simulate(int iterations) {
 
@@ -58,7 +59,7 @@ void Config::simulate(int iterations) {
         int selectionX = rand()%(atoms.size());
         int selectionY = rand()%(atoms.size());
 
-        double energyChange = calculateEnergy(selectionX, selectionY)*2;
+        double energyChange = calculateEnergy(selectionX, selectionY) - calculateEnergy(selectionX, selectionY, -1);
         
         double probability = exp(-beta*energyChange);
 
