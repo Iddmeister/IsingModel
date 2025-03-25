@@ -107,3 +107,23 @@ double Config::calculateTotalMagnetism() {
 
 }
 
+double* Config::calculateTotalEnergyMagnetism() {
+
+    double total_energy = 0;
+    double magnetism = 0;
+
+    for (int x = 0; x < atoms.size(); ++x) {
+        
+        for (int y = 0; y < atoms.size(); ++y) {
+            total_energy += calculateEnergy(x, y);
+            magnetism += atoms[x][y];
+        }
+
+    }
+
+    static double values[2] = {total_energy, magnetism};
+
+    return values;
+
+}
+
