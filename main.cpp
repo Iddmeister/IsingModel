@@ -64,7 +64,6 @@ int main() {
 
             atoms[i] = state;
 
-        // std::cout << atoms[i] << "\n";
 
         }
 
@@ -109,7 +108,5 @@ int main() {
 
     return 0;
 
-
-    // std::mt19937 gen = std::mt19937(seed);
 
 }
