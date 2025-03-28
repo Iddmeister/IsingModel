@@ -13,7 +13,9 @@ int main() {
     int num_atoms = 100;
 
     double J = 1;
-    std::vector<double> temperatures = {100, 300, 298, 1e3, 1e4, 1e8, 1e10, 1e15, 1e20, 1e21, 1e23, 1e24, 1e25, 1e26, 1e27};
+
+    std::vector<double> temperatures = {1e15, 1e20, 1e21, 1e22, 2.5e22, 5e22, 7.5e22, 1e23, 2.5e23, 5e23, 7.5e23, 1e24, 1e25, 1e26, 1e27, 1e28};
+
     
     int numConfigs = 1000;
     int iterations = 2000;

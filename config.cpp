@@ -35,10 +35,7 @@ bool Config::insideBounds(int x, int y) {
 double Config::calculateEnergy(int atomX, int atomY, int flip=1) {
 
     double energy;
-
-    // int directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     
-
     if (insideBounds(atomX+1, atomY+1)) {
 
         energy += (-J*atoms[atomX+1][atomY+1]*atoms[atomX][atomY]*flip);
