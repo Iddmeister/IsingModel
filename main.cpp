@@ -56,7 +56,7 @@ int main() {
     output.open("output.csv");
 
     //Output is written to in csv format
-    output << "iterations,energy,magnetisation" << std::endl;
+    output << "iterations,energy,magnetism" << std::endl;
 
     for (int p = 0; p < possible_iterations.size(); ++p) {
         
