@@ -36,17 +36,15 @@ double Config::calculateEnergy(int atomX, int atomY, int flip=1) {
 
     double energy;
 
-    int directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    // int directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     
-    for (int d = 0; d < sizeof(directions); ++d) {
 
-        if (insideBounds(atomX+directions[d][0], atomY+directions[d][1])) {
+    if (insideBounds(atomX+1, atomY+1)) {
 
-            energy += (-J*atoms[atomX+directions[d][0]][atomY+directions[d][1]]*atoms[atomX][atomY]*flip);
-
-        }
+        energy += (-J*atoms[atomX+1][atomY+1]*atoms[atomX][atomY]*flip);
 
     }
+
 
     return energy;
 }
