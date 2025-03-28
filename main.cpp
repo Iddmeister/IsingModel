@@ -1,10 +1,11 @@
 #include <cstdlib>
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 //This function takes an array of atoms and an index for the atom to calculate the energy of interaction for
 //The value of J and whether or not to flip the state of the atom of interest are also included in the parameters
-double calculateEnergy(int selection, int atoms[], double J, int flip=1) {
+double calculateEnergy(int selection, std::vector<int> atoms, double J, int flip=1) {
 
     double energy_change;
 
@@ -37,7 +38,9 @@ int main() {
     //The number of atoms to simulate the spin of
     int num_atoms = 100;
 
-    int atoms[num_atoms];
+    std::vector<int> atoms;
+
+    atoms.resize(num_atoms);
 
     for (int i = 0; i < num_atoms; ++i) {
         
