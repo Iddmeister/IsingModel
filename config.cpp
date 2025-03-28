@@ -59,7 +59,7 @@ void Config::simulate(int iterations) {
         int selectionX = rand()%(atoms.size());
         int selectionY = rand()%(atoms.size());
 
-        double energyChange = calculateEnergy(selectionX, selectionY) - calculateEnergy(selectionX, selectionY, -1);
+        double energyChange = calculateEnergy(selectionX, selectionY, -1) - calculateEnergy(selectionX, selectionY);
         
         double probability = exp(-beta*energyChange);
 

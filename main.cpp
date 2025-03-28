@@ -8,7 +8,7 @@ int main() {
 
     std::ofstream output;
 
-    int seed = 123;
+    int seed = 12345;
 
     int num_atoms = 100;
 
@@ -21,7 +21,6 @@ int main() {
     // std::vector<Config> configurations;rand()%100000)/1e5
 
     for (int t = 0; t < temperatures.size(); ++t) {
-
 
         srand(seed);
 
@@ -42,9 +41,11 @@ int main() {
             new_config.simulate(iterations);
             // configurations.push_back(new_config);
 
-            double* values = new_config.calculateTotalEnergyMagnetism();
+            // double* values = new_config.calculateTotalEnergyMagnetism();
 
-            output << i << "," << values[0] << "," << values[1] << std::endl;
+            // output << i << "," << values[0] << "," << values[1] << std::endl;
+            output << i << "," << new_config.calculateTotalEnergy() << "," << new_config.calculateTotalMagnetism() << std::endl;
+
 
             // std::cout << "\nConfiguration " << i+1 << "\nTotal Energy: " << new_config.calculateEnergy() << "\nMagnetisation: " << new_config.calculateMagnetism() << "\n";
 
