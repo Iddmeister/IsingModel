@@ -34,17 +34,13 @@ double Config::calculateEnergy(int atom, int flip=1) {
 
     //Boundary conditions for the first and last atom in the line are accounted for
 
-    if (atom == 0) {
-
-        energyChange = -J*atoms[atom]*flip*atoms[atom+1];
-
-    } else if (atom == atoms.size()-1) {
+    if (atom == atoms.size()-1) {
 
         energyChange = -J*atoms[atom]*flip*atoms[atom-1];
 
     } else {
 
-        energyChange = (-J*atoms[atom]*flip*atoms[atom+1]) + (-J*atoms[atom]*flip*atoms[atom-1]);
+        energyChange = (-J*atoms[atom]*flip*atoms[atom+1]);
 
     }
 
