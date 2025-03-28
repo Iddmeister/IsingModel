@@ -10,19 +10,15 @@ double calculateEnergy(int selection, int atoms[], double J, int flip=1) {
 
     double energy_change;
 
-    //Boundary conditions for the first and last atom in the line are accounted for
+    //Boundary conditions for the last atom in the line is accounted for
 
-    if (selection == 0) {
-
-        energy_change = -J*atoms[selection]*flip*atoms[selection+1];
-
-    } else if (selection == 100-1) {
+    if (selection == 100-1) {
 
         energy_change = -J*atoms[selection]*flip*atoms[selection-1];
 
     } else {
 
-        energy_change = (-J*atoms[selection]*flip*atoms[selection+1]) + (-J*atoms[selection]*flip*atoms[selection-1]);
+        energy_change = (-J*atoms[selection]*flip*atoms[selection+1]);
 
     }
 
