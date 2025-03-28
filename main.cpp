@@ -22,7 +22,7 @@ int main() {
     //The number of configurations to run for each temperature
     int numConfigs = 10000;
     //The number of iterations to run for the spin interaction simulation for each configuration
-    int iterations = 2000;
+    int iterations = 10000;
 
     for (int t = 0; t < temperatures.size(); ++t) {
 
