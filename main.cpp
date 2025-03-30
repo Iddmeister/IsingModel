@@ -13,14 +13,15 @@ int main() {
     //Length of grid of atoms, the number of atoms will be this squared
     int num_atoms = 100;
     //Parameters for simulation
-    int numConfigs = 10000;
-    int iterations = 10000;
+    int numConfigs = 1000;
+    int iterations = 1e5;
 
     double J = 1;
     //Vector to hold all temperatures that the simulation will be run at
-    std::vector<double> temperatures = {1e15, 1e20, 1e21, 1e22, 2.5e22, 5e22, 7.5e22, 1e23, 2.5e23, 5e23, 7.5e23, 1e24, 1e25, 1e26, 1e27, 1e28};
-    // std::vector<double> temperatures = {1e15};
+    std::vector<double> temperatures = {1e20, 2.5e22, 5e22, 7.5e22, 1e23, 2.5e23, 5e23, 7.5e23, 1e25, 1e27};
+    // std::vector<double> temperatures = {2.5e22};
 
+    // std::vector<double> temperatures = {1e15};
 
     //Declare object to handle output files
     std::ofstream output;
@@ -47,7 +48,7 @@ int main() {
         for (int i = 0; i < numConfigs; ++i) {
 
             //Create configuration object
-            Config new_config = Config(num_atoms, J, temperature);
+            Config new_config = Config(num_atoms, J, temperature, rand());
 
             new_config.simulate(iterations);
 

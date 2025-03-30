@@ -1,6 +1,7 @@
 //Vector library included for list of atoms
 #include <vector>
 #include <tuple>
+#include <random>
 
 //Definition of class to hold each configuration of the system
 class Config {
@@ -9,7 +10,7 @@ class Config {
 
         //Constructor takes length of grid of atoms, J value and temperature of system
         //Constructor does not support non-square grids
-        Config(int atoms, double J, double temperature);
+        Config(int atoms, double J, double temperature, int seed);
         
         //Public methods to simulate system and retrieve calculation information from object
         double calculateTotalEnergy();
@@ -20,6 +21,11 @@ class Config {
 
 
     private:
+
+        //Private member variables for random number generation
+        std::mt19937 gen;
+        std::uniform_real_distribution<double> uniformDist;
+
 
         //Private member variables used in energy calculations
         double boltzmannConstant = 1.381e-23;
@@ -34,8 +40,10 @@ class Config {
         std::vector<std::vector<int>> atoms;
 
         //Private methods used during construction of object and energy calculations
+        double random();
         int randomOne();
         bool insideBounds(int x, int y);
         double calculateEnergy(int atomX, int atomY, std::vector<std::vector<int>> directions, int flip);
 
 };
+

@@ -1,9 +1,10 @@
 #include "config.h"
-#include <cstdlib>
 #include <cmath>
 #include <iostream>
 
-Config::Config(int _atoms, double _J, double _temperature) {
+Config::Config(int _atoms, double _J, double _temperature, int seed) {
+
+    gen = std::mt19937(seed);
 
     J = _J;
     temperature = _temperature;
@@ -26,9 +27,12 @@ Config::Config(int _atoms, double _J, double _temperature) {
 
 //Method to generate a random +1 or -1, included for better readability
 int Config::randomOne() {
+    return (random() > 0.5 ? 1 : -1);
 
-    return (rand()%2 == 0 ? 1 : -1);
+}
 
+double Config::random() {
+    return uniformDist(this->gen);
 }
 
 //Method to check whether an x and y coord is inside of the grid of atoms
@@ -63,8 +67,8 @@ void Config::simulate(int iterations) {
     for (int i = 0; i < iterations; ++i) {
 
         //Select random x, y coord inside of the 2D atoms vector
-        int selectionX = rand()%(atoms.size());
-        int selectionY = rand()%(atoms.size());
+        int selectionX = floor(random()*(double)atoms.size());
+        int selectionY = floor(random()*(double)atoms.size());
 
         //Calculate the energy change of flipping the spin of selected atom
         double energyChange = calculateEnergy(selectionX, selectionY, simulationDirections, -1) - calculateEnergy(selectionX, selectionY, simulationDirections);
@@ -76,7 +80,7 @@ void Config::simulate(int iterations) {
         if (probability > 1) probability = 1;
 
         //Check probability against random float betwwen 0 and 1
-        if ((rand()%100000)/1e5 < probability) {
+        if (random() < probability) {
             
             //Flip the spin of th selcted atom
             atoms[selectionX][selectionY] *= -1;
