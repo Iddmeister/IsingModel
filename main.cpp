@@ -13,59 +13,57 @@ int main() {
     //Length of grid of atoms, the number of atoms will be this squared
     int num_atoms = 100;
     //Parameters for simulation
-    int numConfigs = 10000;
-    int iterations = 10000;
+    // int numConfigs = 10000;
 
     double J = 1;
     //Vector to hold all temperatures that the simulation will be run at
-    std::vector<double> temperatures = {1e15, 1e20, 1e21, 1e22, 2.5e22, 5e22, 7.5e22, 1e23, 2.5e23, 5e23, 7.5e23, 1e24, 1e25, 1e26, 1e27, 1e28};
-    // std::vector<double> temperatures = {1e15};
+    std::vector<double> possible_iterations;
 
+    for (int i = 0; i < 8; ++i) {
+        possible_iterations.push_back(pow(10, i));
+    }
+
+    possible_iterations.push_back(2e7);
+
+    double temperature = 1e14;
 
     //Declare object to handle output files
     std::ofstream output;
 
-    for (int t = 0; t < temperatures.size(); ++t) {
+    output.open("output.csv");
+
+    //Results are output in csv format
+    output << "iterations,energy,magnetism" << std::endl;
+
+    for (int i = 0; i < possible_iterations.size(); ++i) {
 
         //Seed the randomness for each temperature simulation
         srand(seed);
 
-        double temperature = temperatures[t];
+        int iterations = possible_iterations[i];
 
-        std::cout << "Running " << numConfigs << " configurations at " << temperature << "K with " << iterations << " iterations each" << std::endl;
+
+        std::cout << "Running at " << temperature << "K with " << iterations << " iterations each" << std::endl;
         
-        //Create output file with unique name
-        std::stringstream filename;
-        filename << "output/temperature_" << t << ".csv";
-        output.open(filename.str());
-
-        //Write the temperature of the simulation to the first line of the output file
-        output << "Temperature " << temperature << std::endl;
-        //Results are output in csv format
-        output << "config,energy,magnetism" << std::endl;
-
-        for (int i = 0; i < numConfigs; ++i) {
-
-            //Create configuration object
-            Config new_config = Config(num_atoms, J, temperature);
-
-            new_config.simulate(iterations);
-
-            //Output results to the output file
-            // output << i << "," << new_config.calculateTotalEnergy() << "," << new_config.calculateTotalMagnetism() << std::endl;
-            std::tuple t = new_config.calculateTotalEnergyAndMagnetism();
-            double totalEnergy = std::get<0>(t);
-            double totalMagnetism= std::get<1>(t);
-
-            output << i << "," << totalEnergy << "," << totalMagnetism << std::endl;
 
 
-        }
 
-        output.close();
+        //Create configuration object
+        Config new_config = Config(num_atoms, J, temperature);
 
+        new_config.simulate(iterations);
+
+        //Output results to the output file
+        // output << i << "," << new_config.calculateTotalEnergy() << "," << new_config.calculateTotalMagnetism() << std::endl;
+        std::tuple t = new_config.calculateTotalEnergyAndMagnetism();
+        double totalEnergy = std::get<0>(t);
+        double totalMagnetism= std::get<1>(t);
+
+        output << i << "," << totalEnergy << "," << totalMagnetism << std::endl;
 
     }
+
+    output.close();
 
     return 0;
 
