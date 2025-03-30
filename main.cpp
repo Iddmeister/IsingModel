@@ -13,7 +13,7 @@ int main() {
     //Length of grid of atoms, the number of atoms will be this squared
     int num_atoms = 100;
     //Parameters for simulation
-    int numConfigs = 1000;
+    int numConfigs = 10000;
     int iterations = 10000;
 
     double J = 1;
