@@ -1,5 +1,6 @@
 //Vector library included for list of atoms
 #include <vector>
+#include <tuple>
 
 //Definition of class to hold each configuration of the system
 class Config {
@@ -13,6 +14,8 @@ class Config {
         //Public methods to simulate system and retrieve calculation information from object
         double calculateTotalEnergy();
         double calculateTotalMagnetism();
+        std::tuple<double, double> calculateTotalEnergyAndMagnetism();
+
         void simulate(int iterations);
 
 
@@ -25,6 +28,7 @@ class Config {
         double beta;
 
         std::vector<std::vector<int>> simulationDirections = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        std::vector<std::vector<int>> totalEnergyDirections = {{1, 0}, {0, -1}};
 
         //2D vector to hold grid of atom spins
         std::vector<std::vector<int>> atoms;

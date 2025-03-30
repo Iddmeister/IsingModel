@@ -95,8 +95,7 @@ double Config::calculateTotalEnergy() {
         
         for (int y = 0; y < atoms.size(); ++y) {
 
-            std::vector<std::vector<int>> directions = {{1, 0}, {0, -1}};
-            total += calculateEnergy(x, y, directions);
+            total += calculateEnergy(x, y, totalEnergyDirections);
 
         }
 
@@ -105,8 +104,6 @@ double Config::calculateTotalEnergy() {
     return total;
 
 }
-
-
 
 double Config::calculateTotalMagnetism() {
 
@@ -124,3 +121,22 @@ double Config::calculateTotalMagnetism() {
 
 }
 
+std::tuple<double, double> Config::calculateTotalEnergyAndMagnetism() {
+
+    double energy = 0;
+    double magnetism = 0;
+
+    for (int x = 0; x < atoms.size(); ++x) {
+        
+        for (int y = 0; y < atoms.size(); ++y) {
+
+            energy += calculateEnergy(x, y, totalEnergyDirections);
+            magnetism += atoms[x][y];
+
+        }
+
+    }
+
+    return std::make_tuple(energy, magnetism);
+
+}
