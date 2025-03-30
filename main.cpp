@@ -59,7 +59,7 @@ int main() {
         double totalEnergy = std::get<0>(t);
         double totalMagnetism= std::get<1>(t);
 
-        output << i << "," << totalEnergy << "," << totalMagnetism << std::endl;
+        output << possible_iterations[i] << "," << totalEnergy << "," << totalMagnetism << std::endl;
 
     }
 
