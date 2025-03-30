@@ -1,6 +1,7 @@
 #include "config.h"
 #include <cstdlib>
 #include <cmath>
+#include <iostream>
 
 Config::Config(int _atoms, double _J, double _temperature) {
 
@@ -38,17 +39,19 @@ bool Config::insideBounds(int x, int y) {
 }
 
 //Method to calculate the energy of a single atoms interactions, the spin of the atom can be optionally flipped for the calculation
-double Config::calculateEnergy(int atomX, int atomY, int flip=1) {
+double Config::calculateEnergy(int atomX, int atomY, std::vector<std::vector<int>> directions, int flip=1) {
 
     double energy;
     
-    //Check whether x, y coord are inside of 2D atoms vector
-    if (insideBounds(atomX+1, atomY+1)) {
+    for (int d = 0; d < directions.size(); ++d) {
 
-        energy += (-J*atoms[atomX+1][atomY+1]*atoms[atomX][atomY]*flip);
+        if (insideBounds(atomX+directions[d][0], atomY+directions[d][1])) {
+
+            energy += (-J*atoms[atomX+directions[d][0]][atomY+directions[d][1]]*atoms[atomX][atomY]*flip);
+
+        }
 
     }
-
 
     return energy;
 }
@@ -64,7 +67,7 @@ void Config::simulate(int iterations) {
         int selectionY = rand()%(atoms.size());
 
         //Calculate the energy change of flipping the spin of selected atom
-        double energyChange = calculateEnergy(selectionX, selectionY, -1) - calculateEnergy(selectionX, selectionY);
+        double energyChange = calculateEnergy(selectionX, selectionY, simulationDirections, -1) - calculateEnergy(selectionX, selectionY, simulationDirections);
         
         //Calculate probability of energyChange using partition function
         double probability = exp(-beta*energyChange);
@@ -91,7 +94,10 @@ double Config::calculateTotalEnergy() {
     for (int x = 0; x < atoms.size(); ++x) {
         
         for (int y = 0; y < atoms.size(); ++y) {
-            total += calculateEnergy(x, y);
+
+            std::vector<std::vector<int>> directions = {{1, 0}, {0, -1}};
+            total += calculateEnergy(x, y, directions);
+
         }
 
     }
@@ -99,6 +105,8 @@ double Config::calculateTotalEnergy() {
     return total;
 
 }
+
+
 
 double Config::calculateTotalMagnetism() {
 

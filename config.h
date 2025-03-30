@@ -24,12 +24,14 @@ class Config {
         double temperature;
         double beta;
 
+        std::vector<std::vector<int>> simulationDirections = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
         //2D vector to hold grid of atom spins
         std::vector<std::vector<int>> atoms;
 
         //Private methods used during construction of object and energy calculations
         int randomOne();
         bool insideBounds(int x, int y);
-        double calculateEnergy(int atomX, int atomY, int flip);
+        double calculateEnergy(int atomX, int atomY, std::vector<std::vector<int>> directions, int flip);
 
 };
