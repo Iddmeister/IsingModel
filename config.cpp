@@ -126,6 +126,8 @@ double Config::calculateTotalMagnetism() {
 
 }
 
+//Calculate total energy and magnetism at the same time to save computation time
+//Two values are returned using a tuple
 std::tuple<double, double> Config::calculateTotalEnergyAndMagnetism() {
 
     double energy = 0;

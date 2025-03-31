@@ -24,6 +24,7 @@ int main(int argc, char* argv[]) {
     try {iterations = argc > 3 ? std::stoi(argv[3]) : 1e5;} catch (...) {std::cout << "\nError in number of iterations input\n\n"; return 0;};
     try {J = argc > 4 ? std::stof(argv[4]) : 1;} catch (...) {std::cout << "\nError in J input\n\n"; return 0;};
     try {seed = argc > 5 ? std::stoi(argv[5]) : 12345678;} catch (...) {std::cout << "\nError in seed input\n\n"; return 0;};
+    //Allow definition of new directory to output to
     try {outputDirectory = argc > 6 ? argv[6] : "output_test";} catch (...) {std::cout << "\nError in output directory input\n\n"; return 0;};
 
     if (argc > 7) {
@@ -41,14 +42,17 @@ int main(int argc, char* argv[]) {
 
     }
 
-
+    //Loop through temperatures and run multiple configurations at each
     for (int t = 0; t < temperatures.size(); ++t) {
 
         double temperature = temperatures[t];
 
+        //Create object to hold configurations for given temperature
         ConfigContainer container = ConfigContainer(numConfigs, numAtoms, temperature, seed, J);
 
         container.simulate(iterations);
+
+        //Write output to file
         std::stringstream filename;
         filename << outputDirectory << "/temperature_" << t << ".csv";
         container.outputResults(filename.str());
