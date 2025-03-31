@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     try {J = argc > 4 ? std::stof(argv[4]) : 1;} catch (...) {std::cout << "\nError in J input\n\n"; return 0;};
     try {seed = argc > 5 ? std::stoi(argv[5]) : 12345678;} catch (...) {std::cout << "\nError in seed input\n\n"; return 0;};
     //Allow definition of new directory to output to
-    try {outputDirectory = argc > 6 ? argv[6] : "output_test";} catch (...) {std::cout << "\nError in output directory input\n\n"; return 0;};
+    try {outputDirectory = argc > 6 ? argv[6] : "output";} catch (...) {std::cout << "\nError in output directory input\n\n"; return 0;};
 
     if (argc > 7) {
 
