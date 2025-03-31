@@ -8,6 +8,7 @@ Config::Config(int _atoms, double _J, double _temperature, int seed) {
 
     J = _J;
     temperature = _temperature;
+
     beta = 1/(boltzmannConstant*temperature);
 
     //Atoms vector resized to input parameter
