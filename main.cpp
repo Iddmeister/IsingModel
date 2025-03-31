@@ -2,28 +2,31 @@
 #include "configcontainer.cpp"
 //Included library for handling strings for output file names
 #include <sstream>
+#include <cstdlib>
 
 
-int main() {
-    
-    //Seed for each temperature simulation
-    int seed = 12345678;
 
-    //Length of grid of atoms, the number of atoms will be this squared
-    int num_atoms = 100;
-    //Parameters for simulation
+int main(int argc, char* argv[]) {  
+
+    int numAtoms = 100;
     int numConfigs = 1000;
     int iterations = 1e5;
-
     double J = 1;
+    int seed = 12345678;
 
     std::vector<double> temperatures = {1e20, 2.5e22, 5e22, 7.5e22, 1e23, 2.5e23, 5e23, 7.5e23, 1e25, 1e27};
+
+    try {numAtoms = argc > 1 ? std::stoi(argv[1]) : 100;} catch (...) {std::cout << "\nError in number of atoms input\n\n"; return 0;};
+    try {numConfigs = argc > 2 ? std::stoi(argv[2]) : 1000;} catch (...) {std::cout << "\nError in number of configurations input\n\n"; return 0;};
+    try {iterations = argc > 3 ? std::stoi(argv[3]) : 1e5;} catch (...) {std::cout << "\nError in number of iterations input\n\n"; return 0;};
+    try {J = argc > 4 ? std::stof(argv[4]) : 1;} catch (...) {std::cout << "\nError in J input\n\n"; return 0;};
+    try {seed = argc > 5 ? std::stoi(argv[5]) : 12345678;} catch (...) {std::cout << "\nError in seed input\n\n"; return 0;};
 
     for (int t = 0; t < temperatures.size(); ++t) {
 
         double temperature = temperatures[t];
 
-        ConfigContainer container = ConfigContainer(numConfigs, num_atoms, temperature, seed, J);
+        ConfigContainer container = ConfigContainer(numConfigs, numAtoms, temperature, seed, J);
 
         container.simulate(iterations);
         std::stringstream filename;
